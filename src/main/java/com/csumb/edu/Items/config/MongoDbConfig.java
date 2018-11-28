@@ -1,20 +1,33 @@
-// package com.csumb.edu.Items.config;
+package com.csumb.edu.Items.config;
 
-// import com.csumb.edu.Items.document.Items;
-// import com.csumb.edu.Items.repo.ItemsRepository;
+import com.csumb.edu.Items.document.Items;
+import com.csumb.edu.Items.repo.ItemsRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-// import org.springframework.boot.CommandLineRunner;
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-// import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+@EnableMongoRepositories(basePackageClasses = ItemsRepository.class)
+@Configuration
+public class MongoDbConfig {
+    @Bean
+    CommandLineRunner commandLineRunner(ItemsRepository itemsRepository ) {
+        return args -> {
 
-// @EnableMongoRepositories(basePackageClasses = ItemsRepository.class)
-// @Configuration
-// public class MongoDbConfig {
-//     @Bean
-//     CommandLineRunner commandLineRunner(ItemsRepository itemsRepository ) {
-//         return args -> {
-//             itemsRepository.save(new Items("1", 1, 1.00, "1", "1"));
-//         };
-//     }
-// }
+            if(itemsRepository.findAll().size() < 10){
+
+                itemsRepository.deleteAll();
+                itemsRepository.save(new Items("Men's Regular-Fit Long-Sleeve Plaid Flannel Shirt", 10, 18.00, "https://images-na.ssl-images-amazon.com/images/I/A1FpwwB5J5L._UX679_.jpg", "Essentials is focused on creating affordable, high-quality, and long-lasting everyday clothing you can rely on."));
+                itemsRepository.save(new Items("Men's Short-Sleeve Crewneck Cotton T-Shirt", 10, 14.00, "https://images-na.ssl-images-amazon.com/images/I/81jd5NigoeL._UX679_.jpg", "Great for layering or wearing alone, this smooth cotton T-shirt features a ribbed crewneck, straight hem, short sleeves, and a tag-free neck for everyday comfort"));
+                itemsRepository.save(new Items("Men's Regular-Fit Quick-Dry Golf Polo Shirt", 10, 15.00, "https://images-na.ssl-images-amazon.com/images/I/A1Gb7%2B-DJ5L._UX679_.jpg", "Classic cut makes this golf polo a go-to on or off the links"));
+                itemsRepository.save(new Items("Champion Men's Classic Jersey Script T-Shirt", 10, 12.00, "https://images-na.ssl-images-amazon.com/images/I/81x3RtQemGL._UX466_.jpg", "For more than 90 years, Champion athletic wear has outfitted athletes in authentic athletic apparel before, during and after the game."));
+                itemsRepository.save(new Items("NIKE Sportswear Men's Hangtag Swoosh Tee", 10, 18.75, "data:image/webp;base64,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", "Be part of our tribe!  This super soft tee features Paducah’s Own Chief Paduke "));
+                itemsRepository.save(new Items("Chief Paduke – Men’s Shirts", 10, 25.00, "https://cityofpaducah.com/wp-content/uploads/2018/02/PartakeinPaducah-Chief-Mens-Heather-Grey.jpg", "Be part of our tribe!  This super soft tee features Paducah’s Own Chief Paduke"));
+                itemsRepository.save(new Items("Men's Casual Vintage Long Sleeve Raglan Henley Shirts Baseball T-Shirt", 10, 19.99, "https://images-na.ssl-images-amazon.com/images/I/71nSsNqmpiL._UX425_.jpg", "As A Professional Global Manufacturer Of Knit And Men Apparel That Specializes In Design, Development, Sourcing And Production For Over 10 Years."));
+                itemsRepository.save(new Items("Essentials Men's Regular-Fit Long-Sleeve Plaid Flannel Shirt", 10, 18.00, "https://images-na.ssl-images-amazon.com/images/I/A1EtW1HLDKL._UX679_.jpg", "This weekend-perfect casual button-front shirt in a plaid flannel fabric features a soft feel and maximum comfort"));
+                itemsRepository.save(new Items("Champion Men's Classic Jersey T-Shirt", 10, 7.00, "https://images-na.ssl-images-amazon.com/images/I/61-lqhw726L._UX425_.jpg", "Champion athletic wear has outfitted athletes in authentic athletic apparel before, during and after the game."));
+                itemsRepository.save(new Items("Essentials Men's Regular-Fit Long-Sleeve Plaid Shirt", 10, 18.00, "https://images-na.ssl-images-amazon.com/images/I/A12Etj0MtpL._UX679_.jpg", "Same fit, new name: We’ve changed the name of this shirt style to “Regular Fit” but the measurements remain the same"));
+            }
+        };
+    }
+}
