@@ -42,6 +42,18 @@ public class ItemsResource {
         return _item;
     }
 
+    @CrossOrigin(origins ="*")
+    @PostMapping("/restock")
+    public void restockDB() {
+        List<Items> items = repo.findAll();
+
+        for(Items itm: items) {
+            itm.setStock(10);
+        }
+
+        repo.saveAll(items);
+    }
+
     @CrossOrigin(origins = "*")
     @GetMapping("/item/{id}")
     public Items getItem(@PathVariable String id){
