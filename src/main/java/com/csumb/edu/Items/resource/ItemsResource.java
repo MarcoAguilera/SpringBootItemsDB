@@ -8,6 +8,7 @@ import com.csumb.edu.Items.repo.ItemsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,14 @@ public class ItemsResource {
     @PostMapping("/update")
     public Items updateItem(@RequestBody Items item) {
         Items _item = repo.save(item);
+        return _item;
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/item/{id}")
+    public Items getItem(@PathVariable String id){
+        System.out.println("Gettin User: " + id);
+        Items _item = repo.findById(id).get();
         return _item;
     }
 }
