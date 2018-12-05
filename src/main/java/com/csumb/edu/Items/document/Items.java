@@ -13,13 +13,16 @@ public class Items {
     private double price;
     private String image;
     private String description;
+    private String category;
 
-    public Items(String name, int stock, double price, String image, String description) {
+    
+    public Items(String name, int stock, double price, String image, String description, String category) {
         this.name = name;
         this.stock = stock;
         this.price = price;
         this.image = image;
         this.description = description;
+        this.category = category;
     }
     
     public String getId() {
@@ -66,6 +69,13 @@ public class Items {
         return description;
     }
 
+    public String getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public void setDescription(String description) {
         this.description = description;
